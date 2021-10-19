@@ -1,7 +1,11 @@
 (ns sisyphus.core
   (:require [sisyphus.utils :as utils]))
 
-(def ^:private tasks (atom {}))
+
+(defn- due? [task]
+  true)
+
+(def ^:private tasks (atom []))
 
 (defn add-task
   [name task schedule]

@@ -1,10 +1,6 @@
 (ns sisyphus.core
   (:require [sisyphus.utils :as utils]))
 
-
-(defn- due? [task]
-  true)
-
 (def ^:private tasks (atom []))
 
 (defn add-task
@@ -21,7 +17,7 @@
   task)
 
 (defn- handle-tasks [task]
-  (if (due? task)
+  (if (utils/due? task)
     (do (future (task))
         (update-due-at task))
     task))

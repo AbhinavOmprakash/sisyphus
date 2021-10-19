@@ -1,6 +1,12 @@
 (ns sisyphus.utils
   (:require [java-time :as jtime]))
 
+(defn due? [task-due-at]
+  (let [now (jtime/local-date-time)]
+    (or (jtime/before? task-due-at now)
+        (= task-due-at now))))
+
+
 (defn- get-before
   "Returns the element in coll before key-set.
    Returns 0 if key not in coll."

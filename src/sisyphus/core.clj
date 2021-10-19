@@ -24,9 +24,9 @@
   example `[:every 2 :days 5: hours 3 :minutes 2 :seconds :starting-at 5 :pm]`.
   If the start time is not provided the task will immediately be run when `sisyphus/run` is called."
   [schedule]
-  (let [days    (or (get-before #{:days :day} schedule) 0)
-        hours   (or (get-before #{:hours :hour} schedule)0)
-        minutes (or (get-before #{:minutes :minute} schedule) 0)
-        seconds (or (get-before #{:seconds :second} schedule) 0)
-        [_ start-time] (drop-while (complement #{:starting-at}) schedule)]
-     [(time->seconds days, hours, minutes, seconds)]))
+  (let [days       (or (get-before #{:days :day} schedule) 0)
+        hours      (or (get-before #{:hours :hour} schedule) 0)
+        minutes    (or (get-before #{:minutes :minute} schedule) 0)
+        seconds    (or (get-before #{:seconds :second} schedule) 0)
+        start-time (get-start-time schedule)]
+    [(time->seconds days, hours, minutes, seconds), start-time]))

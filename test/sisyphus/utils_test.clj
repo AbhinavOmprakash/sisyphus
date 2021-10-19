@@ -1,10 +1,10 @@
-(ns sisyphus.core-test
+(ns sisyphus.utils-test
   (:require [clojure.test :refer :all]
-            [sisyphus.core :refer :all]))
+            [sisyphus.utils :refer :all]))
 
 
 
-(def schedule-parser #'sisyphus.core/schedule-parser)
+(def schedule-parser #'sisyphus.utils/schedule-parser)
 
 (deftest -schedule-parser
   (testing "all time periods get converted to seconds"
@@ -24,8 +24,8 @@
            [(+
              (* 6 24 60 60)
              (* 6 60 60)
-             (* 6 60))])))
-  )
+             (* 6 60))]))))
+
 
 
   

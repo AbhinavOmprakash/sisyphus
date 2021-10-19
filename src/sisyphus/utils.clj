@@ -1,4 +1,5 @@
-(ns sisyphus.core)
+(ns sisyphus.utils
+  (:require [java-time :as jtime]))
 
 (defn- get-before
   "Returns the element in coll before key-set.
@@ -30,3 +31,4 @@
         seconds    (or (get-before #{:seconds :second} schedule) 0)
         start-time (get-start-time schedule)]
     [(time->seconds days, hours, minutes, seconds), start-time]))
+

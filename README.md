@@ -1,6 +1,13 @@
 # sisyphus
 
-A Clojure library designed to ... well, that part is up to you.
+"... one must imagine sisyphus happy" - Albert Camus
+
+Sisyphus was the O.G Scheduler, he doggedly rolled a rock up the mountain (only to have it roll back down) 
+and he repeated that, everyday. 
+He wasn't with limitations, he could do only one task.
+That was until he discovered clojure, drunk on the power of clojure, **sisyphus can schedule
+multiple tasks and will do them happily for you**, since anything is more fun than rolling a rock up the mountain,
+that's how one ~~must imagine~~ knows sisyphus is happy.
 
 ## Usage
 

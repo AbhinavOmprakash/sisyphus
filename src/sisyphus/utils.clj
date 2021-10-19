@@ -20,6 +20,11 @@
    (* minutes 60)
    seconds))
 
+(defn- get-start-time [schedule]
+  (when (some #{:starting-at} schedule)
+    (let [[_ & time] (drop-while (complement #{:starting-at}) schedule)]
+      (apply jtime/local-time time))))
+
 (defn schedule-parser
   "Parses a vector to return a period in seconds and a start time.
   example `[:every 2 :days 5: hours 3 :minutes 2 :seconds :starting-at 5 30]`.

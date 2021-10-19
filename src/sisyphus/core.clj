@@ -1,5 +1,6 @@
 (ns sisyphus.core
-  (:require [sisyphus.utils :as utils]))
+  (:require [sisyphus.utils :as utils]
+            [java-time :as jtime]))
 
 (def ^:private tasks (atom []))
 
@@ -12,6 +13,15 @@
                                :due-at              start-time}]
     ; should I throw an exception if the task already exists?
     (swap! tasks conj new-task)))
+
+(defn- nil-due-at->due-at
+  "If the task has a nil due-at then this sets it to now"
+  [task]
+  (update task :due-at (fn [due-at]
+                         (if (nil? due-at)
+                           (jtime/local-date-time)
+                           due-at))))
+
 
 (defn- update-due-at [task]
   (let [interval (:interval-in-seconds task)]
@@ -28,7 +38,8 @@
 
 (defn run-tasks!
   []
-  ()
+  (swap! tasks (fn [tasks]
+                 (map nil-due-at->due-at tasks)))
   (while true
     (let [updated-tasks (map handle-tasks @tasks)]
       (swap! tasks (fn [_] updated-tasks)))

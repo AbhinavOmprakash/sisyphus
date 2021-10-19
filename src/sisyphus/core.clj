@@ -7,12 +7,13 @@
 (defn add-task
   [name task schedule]
   (let [[interval start-time] (utils/schedule-parser schedule)
-        new-task              {:name                name
-                               :task                task
-                               :interval-in-seconds interval
-                               :due-at              start-time}]
+         new-task {:name                name
+                   :task                task
+                   :interval-in-seconds interval
+                   :due-at              start-time}]
     ; should I throw an exception if the task already exists?
     (swap! tasks conj new-task)))
+
 
 (defn- nil-due-at->due-at
   "If the task has a nil due-at then this sets it to now"
@@ -41,6 +42,6 @@
   (swap! tasks (fn [tasks]
                  (map nil-due-at->due-at tasks)))
   (while true
-    (let [updated-tasks (map handle-tasks @tasks)]
-      (swap! tasks (fn [_] updated-tasks)))
+    (swap! tasks (fn [tasks-value]
+                   (map handle-tasks tasks-value)))
     (Thread/sleep 1000)))

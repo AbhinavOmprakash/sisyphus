@@ -2,6 +2,32 @@
   (:require [clojure.test :refer :all]
             [sisyphus.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+
+
+(def schedule-parser #'sisyphus.core/schedule-parser)
+
+(deftest -schedule-parser
+  (testing "all time periods get converted to seconds"
+    (is (= (schedule-parser [:every 6 :days]) 
+           [(* 6 24 60 60)]))
+    (is (= (schedule-parser [:every 6 :hours]) 
+           [(* 6 60 60)]))
+    (is (= (schedule-parser [:every 6 :minutes]) 
+           [(* 6 60)]))
+    (is (= (schedule-parser [:every 6 :seconds]) 
+           [(* 6)])))
+  
+  (testing "schedule can handle mixed time periods"
+    (is (= (schedule-parser [:every 6 :days 6 :hours]) 
+           [(+ (* 6 24 60 60) (* 6 60 60))]))
+    (is (= (schedule-parser [:every 6 :days 6 :hours 6 :minutes]) 
+           [(+
+             (* 6 24 60 60)
+             (* 6 60 60)
+             (* 6 60))])))
+  )
+
+
+  
+
+

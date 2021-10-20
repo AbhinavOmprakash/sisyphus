@@ -46,6 +46,9 @@
 (def ^:private tasks (atom []))
 
 (defn run-tasks!
+  "This function will start the scheduler. Your tasks will be run when they are due.
+  Note: if your `:starting-at` time was before the task runner is called then it will be immediately run.
+  For e.g if a task has a starting-at at 10 (10 am) and you call this function at 11 am, the task will run immediately."
   []
   (initial-setup! tasks)
   (while true

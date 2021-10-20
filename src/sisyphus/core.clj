@@ -75,14 +75,16 @@
   You don't need to specify :days or :hours, even something like this is valid.
   `[:every 1 :second] ; :starting-at is optional and can be left out.` 
   The singular and plural of the time period is valid. like `1 :day` and `5 :days`."
-  [name task schedule]
+  ([[name task schedule]]
+   (add-task! name task schedule))
+  ([name task schedule]
   (let [[interval start-time] (utils/schedule-parser schedule)
         new-task {:name                name
                   :task                task
                   :interval-in-seconds interval
                   :due-at              start-time}]
     ; should I throw an exception if the task already exists?
-    (swap! tasks conj new-task)))
+    (swap! tasks conj new-task))))
 
 
 (defn remove-task!

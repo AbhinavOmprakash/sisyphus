@@ -4,15 +4,6 @@
 
 (def ^:private tasks (atom []))
 
-(defn add-task
-  [name task schedule]
-  (let [[interval start-time] (utils/schedule-parser schedule)
-         new-task {:name                name
-                   :task                task
-                   :interval-in-seconds interval
-                   :due-at              start-time}]
-    ; should I throw an exception if the task already exists?
-    (swap! tasks conj new-task)))
 
 
 (defn- nil-due-at->due-at
@@ -32,6 +23,7 @@
 
 (defn- handle-tasks [task]
   (if (utils/due? task)
+    ;; consider using claypoole to limit the number of spawned threads?
     (do (future (task))
         (update-due-at task))
     task))
@@ -45,3 +37,13 @@
     (swap! tasks (fn [tasks-value]
                    (map handle-tasks tasks-value)))
     (Thread/sleep 1000)))
+
+(defn add-task
+  [name task schedule]
+  (let [[interval start-time] (utils/schedule-parser schedule)
+        new-task {:name                name
+                  :task                task
+                  :interval-in-seconds interval
+                  :due-at              start-time}]
+    ; should I throw an exception if the task already exists?
+    (swap! tasks conj new-task)))

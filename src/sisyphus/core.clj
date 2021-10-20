@@ -86,6 +86,7 @@
 
 
 (defn remove-task!
+  "Removes a task from the tasklist given the name of the task."
   [name]
   (swap! tasks #(filter (fn [task]
                           (not (= name (:name task)))

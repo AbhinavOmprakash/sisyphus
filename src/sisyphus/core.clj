@@ -2,7 +2,6 @@
   (:require [sisyphus.utils :as utils]
             [java-time :as jtime]))
 
-(def ^:private tasks (atom []))
 
 
 (defn- nil-due-at->due-at
@@ -43,6 +42,8 @@
                             local-time->local-date-time)
                       tasks))))
 
+
+(def ^:private tasks (atom []))
 
 (defn run-tasks!
   []

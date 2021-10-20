@@ -13,6 +13,16 @@
                            (jtime/local-date-time)
                            due-at))))
 
+(defn- local-time->local-date-time
+  "If a task has a due-at, its in the local-time format,
+  and must be converted to local-date-time.
+  The date will the set to the date the scheduler is run."
+  [task]
+  (update task :due-at (fn [due-at]
+                         (if-not (nil? due-at)
+                           (jtime/adjust (jtime/local-date-time) due-at)
+                           due-at))))
+
 
 (defn- update-due-at [task]
   (let [interval (:interval-in-seconds task)]

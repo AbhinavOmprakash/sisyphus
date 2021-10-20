@@ -30,11 +30,14 @@
 
 
 (defn- handle-tasks [task]
-  (if (utils/due? task)
-    ;; consider using claypoole to limit the number of spawned threads?
-    (do (future (task))
-        (update-due-at task))
-    task))
+  (let [task-due (:due-at task)
+        task-fn  (:task task)]
+    (if (utils/due? task-due)
+      ;; consider using claypoole to limit the number of spawned threads?
+      (do (future (task-fn))
+          (update-due-at task))
+      task)))
+
 
 (defn- initial-setup! [tasks]
   (swap! tasks (fn [tasks]

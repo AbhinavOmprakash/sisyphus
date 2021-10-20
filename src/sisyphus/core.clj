@@ -62,3 +62,10 @@
                   :due-at              start-time}]
     ; should I throw an exception if the task already exists?
     (swap! tasks conj new-task)))
+
+
+(defn remove-task
+  [name]
+  (swap! tasks #(filter (fn [task]
+                          (not (= name (:name task)))
+                          %))))

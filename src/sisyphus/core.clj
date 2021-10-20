@@ -37,15 +37,21 @@
         (update-due-at task))
     task))
 
+(defn- initial-setup! [tasks]
+  (swap! tasks (fn [tasks]
+                 (map (comp nil-due-at->due-at
+                            local-time->local-date-time)
+                      tasks))))
+
 
 (defn run-tasks!
   []
-  (swap! tasks (fn [tasks]
-                 (map nil-due-at->due-at tasks)))
+  (initial-setup! tasks)
   (while true
     (swap! tasks (fn [tasks-value]
                    (map handle-tasks tasks-value)))
     (Thread/sleep 1000)))
+
 
 (defn add-task
   [name task schedule]

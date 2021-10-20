@@ -78,13 +78,13 @@
   ([[name task schedule]]
    (add-task! name task schedule))
   ([name task schedule]
-  (let [[interval start-time] (utils/schedule-parser schedule)
-        new-task {:name                name
-                  :task                task
-                  :interval-in-seconds interval
-                  :due-at              start-time}]
-    ; should I throw an exception if the task already exists?
-    (swap! tasks conj new-task))))
+   (let [[interval start-time] (utils/schedule-parser schedule)
+         new-task {:name                name
+                   :task                task
+                   :interval-in-seconds interval
+                   :due-at              start-time}]
+     ; should I throw an exception if the task already exists?
+     (swap! tasks conj new-task))))
 
 
 (defn remove-task!

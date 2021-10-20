@@ -89,5 +89,8 @@
   "Removes a task from the tasklist given the name of the task."
   [name]
   (swap! tasks #(filter (fn [task]
-                          (not (= name (:name task)))
-                          %))))
+                          (if (= name (:name task))
+                            (do (println "successfully deleted task " name)
+                                false)
+                            true))
+                        %)))

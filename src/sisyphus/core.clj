@@ -3,7 +3,6 @@
             [java-time :as jtime]))
 
 
-
 (defn- nil-due-at->due-at
   "If the task has a nil due-at then this sets it to current local-date-time."
   [task]
@@ -58,6 +57,7 @@
 
 (def ^:private tasks (atom []))
 
+
 (defn run-tasks!
   "This function will start the scheduler. Your tasks will be run when they are due.
   Note: if your `:starting-at` time was before the task runner is called then it will be immediately run.
@@ -100,11 +100,11 @@
 
 
 (defn remove-task!
-  "Removes a task from the tasklist given the name of the task."
+  "Removes a task from the task list given the name of the task."
   [name]
   (swap! tasks #(filter (fn [task]
                           (if (= name (:name task))
-                            (do (println "successfully deleted task " name)
+                            (do (println "successfully deleted task" name)
                                 false)
                             true))
                         %)))

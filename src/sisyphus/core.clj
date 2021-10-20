@@ -58,6 +58,23 @@
 
 
 (defn add-task!
+  "Add a task to the list of tasks.
+  `name` is a string with the name of the task, this can be used to delete the task, if needed.
+  `task` is a 0-arity function that will be called for its side-effects, its return value will be discarded.
+  `schedule` is a vector that is used to describe the interval at which the task is run and optionally,
+  a time to start the task.
+  
+  Usage:
+  ```clojure
+  (add-task! \"my-task\" 
+              #(println \"task is running\")  
+              [:every 1 :day 5 :hours :3 minutes 1 :second 
+              :starting-at 10 30]) 
+  ```
+
+  You don't need to specify :days or :hours, even something like this is valid.
+  `[:every 1 :second] ; :starting-at is optional and can be left out.` 
+  The singular and plural of the time period is valid. like `1 :day` and `5 :days`."
   [name task schedule]
   (let [[interval start-time] (utils/schedule-parser schedule)
         new-task {:name                name

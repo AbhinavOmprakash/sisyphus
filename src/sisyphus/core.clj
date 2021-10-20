@@ -5,9 +5,8 @@
 (def ^:private tasks (atom []))
 
 
-
 (defn- nil-due-at->due-at
-  "If the task has a nil due-at then this sets it to now"
+  "If the task has a nil due-at then this sets it to current local-date-time."
   [task]
   (update task :due-at (fn [due-at]
                          (if (nil? due-at)

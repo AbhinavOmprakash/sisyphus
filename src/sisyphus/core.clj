@@ -53,7 +53,7 @@
     (Thread/sleep 1000)))
 
 
-(defn add-task
+(defn add-task!
   [name task schedule]
   (let [[interval start-time] (utils/schedule-parser schedule)
         new-task {:name                name
@@ -64,7 +64,7 @@
     (swap! tasks conj new-task)))
 
 
-(defn remove-task
+(defn remove-task!
   [name]
   (swap! tasks #(filter (fn [task]
                           (not (= name (:name task)))

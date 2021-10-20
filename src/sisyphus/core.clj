@@ -61,10 +61,9 @@
   For e.g if a task has a starting-at at 10 (10 am) and you call this function at 11 am, the task will run immediately."
   []
   (initial-setup! tasks)
-  (while true
-    (swap! tasks (fn [tasks-value]
-                   (map handle-tasks tasks-value)))
-    (Thread/sleep 1000)))
+  (swap! tasks (fn [tasks-value]
+                 (smap handle-tasks tasks-value)))
+  (Thread/sleep 1000))
 
 
 (defn add-task!

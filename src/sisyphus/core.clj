@@ -1,7 +1,6 @@
 (ns sisyphus.core
   (:require [sisyphus.utils :as utils]
-            [java-time :as jtime]
-            [com.climate.claypoole :as cp]))
+            [java-time :as jtime]))
 
 
 (defn- nil-due-at->due-at
@@ -29,19 +28,14 @@
                            (jtime/plus old-due-at (jtime/seconds interval))))))
 
 
-(defn- handle-tasks [tasks threads]
-  (cp/upmap threads
-            (fn [task]
-              (let [task-due (:due-at task)
-                    task-fn  (:task task)]
-                (if (utils/due? task-due)
-                ; the task due must be updated before the task is run since we don't know how long
-                ; the task will take to run.
-                  (let [updated-task (update-due-at task)] 
-                    (task-fn)
-                    updated-task)
-                  task)))
-            tasks))
+(defn- handle-tasks [task]
+  (let [task-due (:due-at task)
+        task-fn  (:task task)]
+    (if (utils/due? task-due)
+      ;; consider using claypoole to limit the number of spawned threads?
+      (do (future (task-fn))
+          (update-due-at task))
+      task)))
 
 
 (defn- initial-setup! [tasks]
@@ -51,20 +45,28 @@
                       tasks))))
 
 
+(defn- smap
+  "strict version of map."
+  ([f coll]
+   (smap f coll []))
+  ([f [x & xs] res]
+   (if (seq xs)
+     (recur f xs (conj res (f x)))
+     (conj res (f x)))))
+
+
 (def ^:private tasks (atom []))
 
 
 (defn run-tasks!
-  "This function will start the scheduler. You can optionally specify the number of threads (default is 5).
-  Your tasks will be run when they are due.
+  "This function will start the scheduler. Your tasks will be run when they are due.
   Note: if your `:starting-at` time was before the task runner is called then it will be immediately run.
   For e.g if a task has a starting-at at 10 (10 am) and you call this function at 11 am, the task will run immediately."
-  ([] (run-tasks! 5))
-  ([threads]
-  (while true
-   (initial-setup! tasks)
-     (swap! tasks #(handle-tasks % threads))
-     (Thread/sleep 1000))))
+  []
+  (initial-setup! tasks)
+  (swap! tasks (fn [tasks-value]
+                 (smap handle-tasks tasks-value)))
+  (Thread/sleep 1000))
 
 
 (defn add-task!

@@ -51,16 +51,6 @@
                       tasks))))
 
 
-(defn- smap
-  "strict version of map."
-  ([f coll]
-   (smap f coll []))
-  ([f [x & xs] res]
-   (if (seq xs)
-     (recur f xs (conj res (f x)))
-     (conj res (f x)))))
-
-
 (def ^:private tasks (atom []))
 
 

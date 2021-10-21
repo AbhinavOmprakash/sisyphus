@@ -60,11 +60,13 @@
 
 
 (defn run-tasks!
-  "This function will start the scheduler. Your tasks will be run when they are due.
+  "This function will start the scheduler. You can optionally specify the number of threads (default is 5).
+  Your tasks will be run when they are due.
   Note: if your `:starting-at` time was before the task runner is called then it will be immediately run.
   For e.g if a task has a starting-at at 10 (10 am) and you call this function at 11 am, the task will run immediately."
-  []
-  (initial-setup! tasks)
+  ([] (run-tasks! 5))
+  ([threads]
+  (while true
   (swap! tasks (fn [tasks-value]
                  (smap handle-tasks tasks-value)))
   (Thread/sleep 1000))

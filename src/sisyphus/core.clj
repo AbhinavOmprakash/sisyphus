@@ -30,10 +30,18 @@
 
 
 (defn- handle-tasks [tasks threads]
-      ;; consider using claypoole to limit the number of spawned threads?
-      (do (future (task-fn))
-          (update-due-at task))
-      task)))
+  (cp/upmap threads
+            (fn [task]
+              (let [task-due (:due-at task)
+                    task-fn  (:task task)]
+                (if (utils/due? task-due)
+                ; the task due must be updated before the task is run since we don't know how long
+                ; the task will take to run.
+                  (let [updated-task (update-due-at task)] 
+                    (task-fn)
+                    updated-task)
+                  task)))
+            tasks))
 
 
 (defn- initial-setup! [tasks]

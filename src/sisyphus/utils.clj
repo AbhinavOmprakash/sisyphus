@@ -11,13 +11,12 @@
   "Returns the element in coll before key-set.
    Returns 0 if key not in coll."
   [key-set coll]
-  (if (some key-set coll)
+  (when (some key-set coll)
     (reduce (fn [prev curr]
               (if (key-set curr)
                 (reduced prev)
                 curr))
-            coll)
-    nil))
+            coll)))
 
 (defn- time->seconds [days hours minutes seconds]
   (+

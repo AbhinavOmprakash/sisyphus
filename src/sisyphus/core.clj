@@ -67,9 +67,9 @@
   ([] (run-tasks! 5))
   ([threads]
   (while true
-  (swap! tasks (fn [tasks-value]
-                 (smap handle-tasks tasks-value)))
-  (Thread/sleep 1000))
+   (initial-setup! tasks)
+     (swap! tasks #(handle-tasks % threads))
+     (Thread/sleep 1000))))
 
 
 (defn add-task!

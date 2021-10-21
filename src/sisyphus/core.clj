@@ -29,10 +29,7 @@
                            (jtime/plus old-due-at (jtime/seconds interval))))))
 
 
-(defn- handle-tasks [task]
-  (let [task-due (:due-at task)
-        task-fn  (:task task)]
-    (if (utils/due? task-due)
+(defn- handle-tasks [tasks threads]
       ;; consider using claypoole to limit the number of spawned threads?
       (do (future (task-fn))
           (update-due-at task))

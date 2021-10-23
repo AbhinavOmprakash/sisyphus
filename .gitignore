@@ -15,3 +15,4 @@ pom.xml.asc
 .idea/*
 .lsp/*
 .clj-kondo/*
+sisyphus-log.edn

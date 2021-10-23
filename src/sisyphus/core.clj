@@ -24,7 +24,7 @@
                            due-at))))
 
 
-(defn- update-due-at [task]
+(defn- update-due-at! [task]
   (let [interval (:interval-in-seconds task)]
     (update task :due-at (fn [old-due-at]
                            (jtime/plus old-due-at (jtime/seconds interval))))))

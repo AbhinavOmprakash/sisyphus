@@ -5,6 +5,9 @@
 
 
 (def ^:private tasks (atom (list)))
+(def ^:private keep-running
+  "flag to start or stop sisyphus."
+  (atom true))
 (defn- nil-due-at->due-at
   "If the task has a nil due-at then this sets it to current local-date-time."
   [task]

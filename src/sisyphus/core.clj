@@ -36,14 +36,20 @@
     (update task :due-at (fn [old-due-at]
                            (jtime/plus old-due-at (jtime/seconds interval))))))
 
+(defn- start-task! [task]
+  (let [task-name (:name task)
+        task-fn (:task task)
+        start-time   (jtime/local-date-time)
+        task-result  (try (task-fn) (catch Exception e e))
+        task-outcome (not (instance? Exception task-result)) ; exception -> fail 
+        end-time     (jtime/local-date-time)]
+    (sisy-log/update-log! start-time end-time task-name task-outcome task-result)))
 
 (defn- handle-tasks [task]
-  (let [task-due (:due-at task)
-        task-fn  (:task task)]
+  (let [task-due (:due-at task)]
     (if (utils/due? task-due)
-      ;; consider using claypoole to limit the number of spawned threads?
-      (do (future (task-fn))
-          (update-due-at task))
+      (do (future (start-task! task))
+          (update-due-at! task))
       task)))
 
 

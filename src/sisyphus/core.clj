@@ -73,6 +73,8 @@
             (swap! tasks (fn [tasks-value]
                            (smap handle-tasks tasks-value)))
             (Thread/sleep 1000)))
+  (println "sisyphus is doing your tasks. You can stop him by calling\n(stop-tasks!)\n
+  Otherwise you can keep doing other things."))
 
 (defn stop-tasks! []
   (swap! keep-running (fn [_] false)))

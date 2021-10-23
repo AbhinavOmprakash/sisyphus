@@ -65,8 +65,13 @@
      (conj res (f x)))))
 
 
-(def ^:private tasks (atom []))
+(defn write-log! []
+  (spit log-file-path
+        (apply str (sisy-log/prettify-log :file))
+        :append true))
 
+(defn print-log! []
+  (println (sisy-log/prettify-log :console)))
 
 (defn run-tasks!
   "This function will start the scheduler. Your tasks will be run when they are due.

@@ -1,6 +1,7 @@
 (ns sisyphus.core
   (:require [sisyphus.utils :as utils]
-            [java-time :as jtime]))
+            [java-time :as jtime]
+            [sisyphus.log :as sisy-log]))
 
 
 (defn- nil-due-at->due-at

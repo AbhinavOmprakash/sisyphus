@@ -73,6 +73,8 @@
                  (smap handle-tasks tasks-value)))
   (Thread/sleep 1000))
 
+(defn stop-tasks! []
+  (swap! keep-running (fn [_] false)))
 
 (defn add-task!
   "Add a task to the list of tasks.

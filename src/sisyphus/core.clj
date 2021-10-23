@@ -44,6 +44,7 @@
 
 
 (defn- initial-setup! [tasks]
+  (swap! keep-running (fn [_] true))
   (swap! tasks (fn [tasks]
                  (map (comp nil-due-at->due-at
                             local-time->local-date-time)

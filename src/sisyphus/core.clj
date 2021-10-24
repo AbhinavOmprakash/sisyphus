@@ -79,6 +79,10 @@
 (defn print-log! []
   (println (sisy-log/prettify-log :console)))
 
+(defn running?
+  "Will return true if sisyphus is running, false if not."
+  [] @keep-running)
+
 (defn run-tasks!
   "This function will start the scheduler. Your tasks will be run when they are due.
   Note: if your `:starting-at` time was before the task runner is called then it will be immediately run.

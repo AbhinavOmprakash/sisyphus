@@ -1,5 +1,6 @@
 (ns sisyphus.log
-  (:require [java-time :as jtime]))
+  (:require [java-time :as jtime]
+            [clojure.spec.alpha :as s]))
 
 (def ^:private log (atom (list)))
 

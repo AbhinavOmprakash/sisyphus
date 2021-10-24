@@ -22,11 +22,11 @@
 (apply sisy/add-task! t1)
 
 (apply sisy/add-task! t2)
-(apply sisy/add-task! t-exception)
+;; (apply sisy/add-task! t-exception)
 
 
 (sisy/run-tasks!)
-(Thread/sleep 60000)
+(Thread/sleep 10010)
+;; (Thread/sleep 60000)
 (sisy/stop-tasks!)
-
-
+(sisy/print-log!)

@@ -1,6 +1,12 @@
 (ns sisyphus.utils
   (:require [java-time :as jtime]))
 
+(defn get-fn-name [f]
+  (let [demunged (clojure.repl/demunge (str f))
+        name (apply str (take-while (complement #{\@}) demunged))]
+    name))
+
+
 (defn due? [task-due-at]
   (let [now (jtime/local-date-time)]
     (or (jtime/before? task-due-at now)

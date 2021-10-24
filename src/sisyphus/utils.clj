@@ -1,8 +1,9 @@
 (ns sisyphus.utils
-  (:require [java-time :as jtime]))
+  (:require [java-time :as jtime]
+  [clojure.repl :as repl]          ))
 
 (defn get-fn-name [f]
-  (let [demunged (clojure.repl/demunge (str f))
+  (let [demunged (repl/demunge (str f))
         name (apply str (take-while (complement #{\@}) demunged))]
     name))
 

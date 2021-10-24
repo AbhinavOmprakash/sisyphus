@@ -1,6 +1,5 @@
 (ns sisyphus.log
-  (:require [java-time :as jtime]
-            [clojure.spec.alpha :as s]))
+  (:require [java-time :as jtime]))
 
 (def ^:private log (atom (list)))
 
@@ -13,7 +12,8 @@
     new-lines))
 
 (defn- update-lines-written-to-file! [lines]
-  (swap! lines-written-to-file + (count lines)))
+  (swap! lines-written-to-file + (count lines))
+  lines)
 
 (defn- truncate [s n]
   (subs s 0 n))
@@ -27,7 +27,8 @@
 
 (defmethod prettify-log :file
   ([_]
-   (->> @log
+   (->> (get-lines-for-file)
+        update-lines-written-to-file!
         (sort (fn [a b]
                 (jtime/before? (:start-time a) (:start-time b))))
         (map (fn [x]
@@ -42,8 +43,7 @@
 
 (defmethod prettify-log :console
   ([_]
-   (->> (get-lines-for-file)
-        update-lines-written-to-file!
+   (->> @log
         (sort (fn [a b]
                 (jtime/before? (:start-time a) (:start-time b))))
         (map (fn [x]

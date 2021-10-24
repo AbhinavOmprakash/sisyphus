@@ -83,6 +83,15 @@
   "Will return true if sisyphus is running, false if not."
   [] @keep-running)
 
+(defonce ^:private console-message 
+  (apply str (interpose "\n" ["Here are somethings sisyphus can do."
+              "Call (stop-tasks!) to stop tasks."
+              "Call (print-log!) to print logs in the repl."
+              "Call (write-log!) to write logs to sisyphus-log.edn."
+              "Call (add-task!) to add a task."
+              "Call (remove-task!) to remove a task."
+              "Call (running?) to check if sisyphus is running."])))
+
 (defn run-tasks!
   "This function will start the scheduler. Your tasks will be run when they are due.
   Note: if your `:starting-at` time was before the task runner is called then it will be immediately run.
@@ -93,11 +102,12 @@
             (swap! tasks (fn [tasks-value]
                            (smap handle-tasks tasks-value)))
             (Thread/sleep 1000)))
-  (println "sisyphus is doing your tasks. You can stop him by calling\n(stop-tasks!)\n
-  Otherwise you can keep doing other things."))
+  (println "sisyphus is doing your tasks.\n")
+  (println console-message))
 
 (defn stop-tasks! []
-  (swap! keep-running (fn [_] false)))
+  (swap! keep-running (fn [_] false))
+  (println "sisyphus has stopped running"))
 
 (defn add-task!
   "Add a task to the list of tasks.
@@ -126,7 +136,8 @@
                                 :interval-in-seconds interval
                                 :due-at              start-time}]
      ; should I throw an exception if the task already exists?
-     (swap! tasks conj new-task))))
+     (println "Task" name "added successfully")
+     (println console-message))))
 
 
 (defn remove-task!
@@ -137,4 +148,5 @@
                             (do (println "successfully deleted task" name)
                                 false)
                             true))
-                        %)))
+                        %))
+  (println console-message))

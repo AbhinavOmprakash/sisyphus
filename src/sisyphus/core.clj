@@ -112,9 +112,10 @@
 (defn add-task!
   "Add a task to the list of tasks.
   `name` is a string with the name of the task, this can be used to delete the task, if needed.
+   if `name` is not specified, the fully-qualified name of the function will be used. 
   `task` is a 0-arity function that will be called for its side-effects, its return value will be discarded.
   `schedule` is a vector that is used to describe the interval at which the task is run and optionally,
-  a time to start the task.
+   a time to start the task.
   
   Usage:
   ```clojure
@@ -127,8 +128,8 @@
   You don't need to specify :days or :hours, even something like this is valid.
   `[:every 1 :second] ; :starting-at is optional and can be left out.` 
   The singular and plural of the time period is valid. like `1 :day` and `5 :days`."
-  ([[name task schedule]]
-   (add-task! name task schedule))
+  ([task schedule]
+   (add-task! (utils/get-fn-name task) task schedule))
   ([name task schedule]
    (let [[interval start-time] (utils/schedule-parser schedule)
          new-task              {:name                name
@@ -136,6 +137,7 @@
                                 :interval-in-seconds interval
                                 :due-at              start-time}]
      ; should I throw an exception if the task already exists?
+     (swap! tasks conj new-task)
      (println "Task" name "added successfully")
      (println console-message))))
 

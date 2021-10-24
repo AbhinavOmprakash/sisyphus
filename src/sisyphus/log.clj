@@ -54,7 +54,8 @@
         (map (fn [x]
                [(:outcome x) (:name x) (:start-time x) (:end-time x) (:result x) "\n"]))
         (map #(interpose " " %))
-        (map (partial apply str)))))
+        (map (partial apply str))
+        (apply str))))
 
 (defn update-log! [start end name outcome result]
   (swap! log #(cons {:outcome outcome :name name

@@ -30,3 +30,4 @@
 ;; (Thread/sleep 60000)
 (sisy/stop-tasks!)
 (sisy/print-log!)
+(sisy/write-log!)

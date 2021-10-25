@@ -16,3 +16,8 @@ pom.xml.asc
 .lsp/*
 .clj-kondo/*
 sisyphus-log.edn
+.settings/org.eclipse.jdt.apt.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.m2e.core.prefs
+.project
+.classpath

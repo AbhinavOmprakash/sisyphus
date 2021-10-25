@@ -35,7 +35,9 @@
                (-> x
                    (update :start-time #(str "#inst " "\"" % "\"")) ; #inst "2021-10-23T16:51:04.134884800"
                    (update :end-time #(str "#inst " "\"" % "\""))
-                   (update :outcome #(if (= % true) "SUCCESS" "!ERROR!")))))
+                   (update :outcome #(if (= % true) "SUCCESS" "!ERROR!"))
+                   (update :result (fn [x] (when (instance? java.lang.Exception x)
+                                             (str "#Exception " "\"" x "\"")))))))
         (map (fn [x]
                [(:outcome x) (:name x) (:start-time x) (:end-time x) (:result x) "\n"]))
         (map #(interpose " " %))

@@ -8,7 +8,7 @@
 
 (def ^:private keep-running
   "flag to start or stop sisyphus."
-  (atom true))
+  (atom false))
 
 (def ^:private log-file-path "sisyphus-log.edn")
 

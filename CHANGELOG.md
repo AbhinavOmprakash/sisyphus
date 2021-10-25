@@ -7,14 +7,11 @@ All notable changes to this project will be documented in this file. This change
 
 ## [0.1.1] - 2021-10-19
 ### Changed
-- Documentation on how to make the widgets.
 
 ### Removed
-- `make-widget-sync` - we're all async, all the time.
-
 ### Fixed
-- Fixed widget maker to keep working when daylight savings switches over.
-
+- `running?` works properly.
+  in 0.1.0 it would show true before the first run.
 ## 0.1.0 - 2021-10-19
 ### Added
 - Files from the new template.

@@ -37,18 +37,18 @@
     (let [[_ & time] (drop-while (complement #{:starting-at}) schedule)]
       (apply jtime/local-time time))))
 
-;replace with spec
-(defn verify-schedule-syntax [schedule]
-  (let [valid-keys #{:days :day
-                     :hours :hour
-                     :minutes :minute
-                     :seconds :second}]
-    (-> schedule
-        (#(assert (= :every (first %)) "first element must be :every"))
-        (#(assert (some valid-keys
-                        %) "missing duration keyword"))
-        (#(assert (not (some valid-keys (remove valid-keys %))) 
-                  "use of a duration key twice")))))
+;;;;;;;;;;;;replace with spec
+;; (defn verify-schedule-syntax [schedule]
+;;   (let [valid-keys #{:days :day
+;;                      :hours :hour
+;;                      :minutes :minute
+;;                      :seconds :second}]
+;;     (-> schedule
+;;         (#(assert (= :every (first %)) "first element must be :every"))
+;;         (#(assert (some valid-keys
+;;                         %) "missing duration keyword"))
+;;         (#(assert (not (some valid-keys (remove valid-keys %))) 
+;;                   "use of a duration key twice")))))
 
 (defn schedule-parser
   "Parses a vector to return a period in seconds and a start time.

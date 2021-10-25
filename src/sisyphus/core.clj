@@ -121,7 +121,7 @@
   ```clojure
   (add-task! \"my-task\" 
               #(println \"task is running\")  
-              [:every 1 :day 5 :hours :3 minutes 1 :second 
+              [:every 1 :day 5 :hours 3 :minutes 1 :second 
               :starting-at 10 30]) 
   ```
 

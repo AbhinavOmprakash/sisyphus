@@ -1,4 +1,4 @@
-(defproject org.clojars.abhinav/sisyphus "0.1.0"
+(defproject org.clojars.abhinav/sisyphus "0.1.1"
   :description "Sisyphus is a task scheduler that runs clojure functions periodically."
   :url "https://github.com/AbhinavOmprakash/sisyphus"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"

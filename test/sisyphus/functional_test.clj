@@ -1,6 +1,13 @@
 (ns sisyphus.functional-test
-  (:require [sisyphus.core :as sisy]))
+  (:require [sisyphus.core :as sisy]
+            [clojure.java.io :as io]
+            [clojure.string :as string]))
 
+(defn cleanup-files []
+  (let [files (seq (.list (io/file ".")))
+        text-files (filter #(string/includes? % ".txt") files)]
+    (doseq [file text-files] 
+      (io/delete-file file))))
 
 (def t1 ["writefile2seconds"
          (fn []
@@ -22,7 +29,7 @@
 (apply sisy/add-task! t1)
 
 (apply sisy/add-task! t2)
-;; (apply sisy/add-task! t-exception)
+(apply sisy/add-task! t-exception)
 
 
 (sisy/run-tasks!)
@@ -31,3 +38,4 @@
 (sisy/stop-tasks!)
 (sisy/print-log!)
 (sisy/write-log!)
+(cleanup-files)

@@ -9,6 +9,7 @@ That was until he discovered clojure, drunk on the power of clojure, **sisyphus 
 multiple tasks and will do them happily for you**, since anything is more fun than rolling a rock up the mountain,
 that's how one ~~must imagine~~ knows sisyphus is happy.
 
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.abhinav/sisyphus.svg)](https://clojars.org/org.clojars.abhinav/sisyphus)
 ## Usage
 
 There are three functions that you will use the most. 

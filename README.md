@@ -70,12 +70,19 @@ This will gracefulyl stop sisyphus. All tasks currently running will finish runn
 
 Logs can be printed or written to a `sisyphus-log.edn` file.
 `(print-log!)` will print to console
+for e.g
+```clojure
+(print-log!)
+SUCCESS writefileSleep 2021-10-24T21:09:48 2021-10-24T21:09:59  
+SUCCESS writefile2seconds 2021-10-24T21:09:48 2021-10-24T21:09:48  
+SUCCESS writefile2seconds 2021-10-24T21:09:54 2021-10-24T21:09:54  
+```
 
-
+`(write-log!)` will write to the edn file.
 
 ## License
 
-Copyright © 2021 FIXME
+Copyright © 2021 Abhinav Omprakash
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
